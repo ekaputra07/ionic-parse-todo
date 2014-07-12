@@ -1,8 +1,8 @@
 angular.module('services', [])
 
 .factory('TodoService', function(){
-    var parseAppId = 'jeH6Sld5vOzC6WdngapLJ4u5zWMyW62wmaPvPTBW',
-        parseAppKey = 'Idjev7cVQkEFoCHrRrBwv7lSfbnM2QZvjbEdo9Z8';
+    var parseAppId = 'myappid',
+        parseAppKey = 'myappkey';
 
     Parse.initialize(parseAppId, parseAppKey);
 
