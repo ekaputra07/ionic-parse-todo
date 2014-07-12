@@ -37,3 +37,9 @@ $ ionic emulate android
 ```
 
 More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/getting-started) page.
+
+Screenshot
+==========
+
+![screen-1.png](https://raw.github.com/ekaputra07/ionic-parse-todo/master/screen-1.png)
+![screen-2.png](https://raw.github.com/ekaputra07/ionic-parse-todo/master/screen-2.png)
