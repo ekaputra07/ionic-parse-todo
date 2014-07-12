@@ -1,7 +1,7 @@
 Parse Todo
 ===========
 
-A simple todo app powered by [Ionic Framework](http://ionicframework.com/getting-started/) and [Parse](https://www.parse.com/) data storage.
+A simple todo app powered by [Ionic Framework](http://ionicframework.com/getting-started/) and [Parse](https://www.parse.com/) datastore.
 
 ## Using this project
 
@@ -13,7 +13,7 @@ $ sudo npm install -g ionic cordova
 
 And **register an application at Parse**. https://www.parse.com/.
 
-Add your Parse application ID and Key, then open and edit file `www/js/services.js` and change the values with your parse app ID and key.
+Add your Parse application ID and Key in `www/js/services.js`.
 
 ```javascript
 var parseAppId = 'myappid',
