@@ -5,7 +5,7 @@
         A simple todo app backed by Parse data storage.
     </description>
     <author email="ekaputra@balitechy.com" href="http://www.balitechy.com/">
-      Ionic Framework Team
+      Eka Putra
     </author>
     <content src="index.html" />
     <access origin="*" />

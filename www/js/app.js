@@ -1,28 +1,68 @@
 // Ionic Parse Todo
-angular.module('todo', ['ionic', 'services'])
+angular.module('todo', ['ionic', 'ui.router', 'ngCordova', 'services'])
 
-.run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if(window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if(window.StatusBar) {
-            StatusBar.styleDefault();
-        }
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+
+    $urlRouterProvider.otherwise('/netstatus');
+
+    $stateProvider
+    .state('netstatus', {
+        url: '/netstatus',
+        templateUrl: 'page.netstatus.html',
+        controller: 'NetStatusCtrl'
+    })
+    .state('todo', {
+        url: '/todo',
+        templateUrl: 'page.todo.html',
+        controller: 'TodoCtrl'
     });
-})
+}])
 
-.controller('TodoCtrl', function($scope, $ionicModal, $ionicSideMenuDelegate, TodoService){
+.controller('NetStatusCtrl', ['$scope', '$cordovaNetwork', '$state', '$ionicLoading', function($scope, $cordovaNetwork, $state, $ionicLoading){
+    $scope.online = true;
 
-    // Load projects
+    $scope.checkConnection = function(){
+        $ionicLoading.show({
+            template: 'Checking for internet connection...'
+        });
+
+        setTimeout(function(){
+            $scope.online = $cordovaNetwork.isOnline();
+            $ionicLoading.hide();
+
+            if($scope.online){
+                $state.go('todo');
+            }
+        }, 1000);
+    };
+
+    $scope.checkConnection();
+}])
+
+.controller('TodoCtrl', ['$scope', '$ionicModal', '$ionicSideMenuDelegate', '$ionicPopup', '$cordovaNetwork', 'TodoService',
+        function($scope, $ionicModal, $ionicSideMenuDelegate, $ionicPopup, $cordovaNetwork, TodoService){
+
     $scope.projects = TodoService.projects;
     $scope.tasks = TodoService.tasks;
     $scope.activeProject = null;
+    $scope.loading = true;
+
+    $ionicModal.fromTemplateUrl('modal.newtask.html', function(modal){
+        $scope.taskModal = modal;
+    }, {
+        scope: $scope
+    });
+
+    var setLoading = function(status){
+        $scope.loading = status;
+    };
 
     var filterTasks = function(project){
+        setLoading(true);
+
         TodoService.query_tasks(project, function(objs){
+            setLoading(false);
+
             $scope.$apply(function(){
                 $scope.tasks.reset(objs);
             });
@@ -32,19 +72,17 @@ angular.module('todo', ['ionic', 'services'])
     $scope.projects.fetch({
         success: function(){
             $scope.$apply(function(){
+                setLoading(false);
+
                 $scope.activeProject = $scope.projects.models[0];
                 if($scope.activeProject){
                     filterTasks($scope.activeProject);
                 }
             });
+        },
+        error: function(){
+            setLoading(false);
         }
-    });
-
-    // Create modal
-    $ionicModal.fromTemplateUrl('new-task.html', function(modal){
-        $scope.taskModal = modal;
-    }, {
-        scope: $scope
     });
 
     // Open new task modal
@@ -125,4 +163,4 @@ angular.module('todo', ['ionic', 'services'])
             return 'Tasks for `'+ $scope.activeProject.the_title() +'`';
         }
     };
-});
+}]);

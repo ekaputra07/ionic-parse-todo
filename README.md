@@ -31,9 +31,11 @@ Then open your browser at http://localhost:8100
 If you want to run it as Android application, you should install the platform first.
 
 ```bash
-$ ionic platform add android
-$ ionic build android
-$ ionic emulate android
+$ cordova platform add android
+$ cordova plugin add org.apache.cordova.device
+$ cordova plugin add org.apache.cordova.network-information
+$ cordova build android
+$ cordova emulate android
 ```
 
 More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/getting-started) page.

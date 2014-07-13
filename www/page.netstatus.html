@@ -1,0 +1,16 @@
+<ion-header-bar class="bar-positive">
+<h1 class="title">Parse Todo</h1>
+</ion-header-bar>
+
+
+<ion-content ng-show="!online">
+    <div class="card">
+      <div class="item item-text-wrap">
+        Internet connection not available. Please enable and click refresh.
+      </div>
+    </div>
+    <button class="button button-block button-clear button-positive icon ion-refresh" ng-click="checkConnection()">
+      Refresh
+    </button>
+
+</ion-content>
